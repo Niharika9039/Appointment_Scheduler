@@ -5,6 +5,9 @@ using System.Security.Cryptography;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Twilio.Types;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace Appointment_Scheduler
 {
@@ -131,10 +134,6 @@ namespace Appointment_Scheduler
         {
             DateTime currentTime = DateTime.Now;
 
-            // Output the current time to see if it's being calculated correctly
-            Response.Write("Current time for deletion: " + currentTime.ToString() + "<br>");
-
-
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
@@ -149,11 +148,49 @@ namespace Appointment_Scheduler
                     {
                         // Refresh the appointments table after deleting the expired appointments
                         LoadAppointments();
+
+                        // Send WhatsApp messages to users about their upcoming appointments
+                        SendWhatsAppReminders();
                     }
                 }
             }
         }
 
+        // Method to send WhatsApp messages as reminders for upcoming appointments
+        protected void SendWhatsAppReminders()
+        {
+            // Your Twilio account SID and Auth Token
+            string accountSid = "YOUR_TWILIO_ACCOUNT_SID";
+            string authToken = "YOUR_TWILIO_AUTH_TOKEN";
+
+            // Initialize Twilio client
+            TwilioClient.Init(accountSid, authToken);
+
+            // Define the message content
+            string message = "Hello! This is a reminder for your upcoming appointment.";
+
+            // Iterate through the appointments to send reminders
+            foreach (GridViewRow row in appointmentsGrid.Rows)
+            {
+                DateTime appointmentTime = Convert.ToDateTime(row.Cells[4].Text);
+
+                // If the appointment time is within the reminder period (e.g., 1 hour before)
+                TimeSpan reminderPeriod = TimeSpan.FromHours(1);
+                if (appointmentTime - DateTime.Now <= reminderPeriod)
+                {
+                    // Get the user's phone number (assuming it's stored in the GridView)
+                    string phoneNumber = "+919009330000";
+
+                    // Send the WhatsApp message
+                    MessageResource.Create(
+                        from: new PhoneNumber("whatsapp:YOUR_TWILIO_WHATSAPP_NUMBER"),
+                        to: new PhoneNumber($"whatsapp:{phoneNumber}"),
+                        body: message
+                    );
+                }
+            }
+        }
+    
         // Method to start the timer when the GridView rows are being bound (displayed)
         protected void appointmentsGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -166,5 +203,7 @@ namespace Appointment_Scheduler
                 }
             }
         }
+
+        
     }
 }

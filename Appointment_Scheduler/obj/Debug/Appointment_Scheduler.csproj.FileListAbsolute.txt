@@ -57,3 +57,12 @@ C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\obj\Debu
 C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\obj\Debug\Appointment_Scheduler.csproj.CopyComplete
 C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\obj\Debug\Appointment_Scheduler.dll
 C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\obj\Debug\Appointment_Scheduler.pdb
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\Microsoft.IdentityModel.Logging.dll
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\Microsoft.IdentityModel.Tokens.dll
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\Newtonsoft.Json.dll
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\Twilio.dll
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\Microsoft.IdentityModel.Tokens.xml
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\Newtonsoft.Json.xml
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\nihar\source\repos\Appointment_Scheduler\Appointment_Scheduler\bin\Twilio.xml
