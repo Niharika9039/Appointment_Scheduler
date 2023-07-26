@@ -167,15 +167,15 @@ namespace Appointment_Scheduler
             //private readonly string _accountSid = ConfigurationManager.AppSettings["TwilioAccountSID"];
             //private readonly string _authToken = ConfigurationManager.AppSettings["TwilioAuthToken"];
 
-            public Class1()
-            {
-                _client = new TwilioRestClient(_accountSid, _authToken);
-            }
+            //public Class1()
+            //{
+            //    _client = new TwilioRestClient(_accountSid, _authToken);
+            //}
 
-            public Class1(ITwilioRestClient client)
-            {
-                _client = client;
-            }
+            //public Class1(ITwilioRestClient client)
+            //{
+            //    _client = client;
+            //}
 
 
             public void SendSmsMessage(string phoneNumber, string message)

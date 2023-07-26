@@ -351,6 +351,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Main.aspx" />
     <Content Include="neeleshSir.jpeg" />
+    <Content Include="neeleshSir2.jpeg" />
     <Content Include="schedule.jpg" />
     <Content Include="Schedule_appoint.aspx" />
     <Content Include="Signup.aspx" />
@@ -402,7 +403,6 @@
     <Content Include="Helper\vendor\jquery.cookie\component.json" />
     <Content Include="Helper\vendor\jquery.cookie\cookie.jquery.json" />
     <None Include=".editorconfig" />
-    <Content Include="jsconfig.json" />
     <Content Include="assets\vendor\aos\aos.js.map" />
     <Content Include="assets\vendor\bootstrap-icons\bootstrap-icons.json" />
     <Content Include="assets\vendor\bootstrap-icons\bootstrap-icons.scss" />
