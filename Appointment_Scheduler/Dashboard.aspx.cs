@@ -5,9 +5,14 @@ using System.Security.Cryptography;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Twilio.Types;
+using System.Configuration;
+using System.Web.Configuration;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
+using Twilio.TwiML.Messaging;
+using Twilio.Clients;
+using Twilio.Types;
+using System.Web.Services.Description;
 
 namespace Appointment_Scheduler
 {
@@ -28,6 +33,21 @@ namespace Appointment_Scheduler
                 timerAutoDelete.Interval = 60000; // 1 minute (adjust as needed)
             }
 
+        }
+
+        protected void btnSendMessage_Click(object sender, EventArgs e)
+        {
+            // Recipient's phone number in E.164 format (including country code)
+            string recipientPhoneNumber = "+919009330000";
+
+            // Your SMS message
+            string message = "Hello, this is a test message from Twilio!";
+
+            // Create an instance of the embedded Class1
+            var smsSender = new Class1();
+
+            // Send the SMS message using the SendSmsMessage method
+            smsSender.SendSmsMessage(recipientPhoneNumber, message);
         }
 
 
@@ -126,72 +146,9 @@ namespace Appointment_Scheduler
             Response.Write("Timer ticked! Current time: " + DateTime.Now.ToString() + "<br>");
 
             // Call the method to delete expired appointments
-            DeleteExpiredAppointments();
+            DeleteExpiredAppointmentsAndSendReminders();
         }
 
-        // Method to delete appointments with scheduled times that have already passed
-        protected void DeleteExpiredAppointments()
-        {
-            DateTime currentTime = DateTime.Now;
-
-            using (SqlConnection con = new SqlConnection(ConnectionString))
-            {
-                con.Open();
-                string deleteQuery = "DELETE FROM Appointments WHERE date_time < @currentTime";
-
-                using (SqlCommand cmd = new SqlCommand(deleteQuery, con))
-                {
-                    cmd.Parameters.AddWithValue("@currentTime", currentTime);
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        // Refresh the appointments table after deleting the expired appointments
-                        LoadAppointments();
-
-                        // Send WhatsApp messages to users about their upcoming appointments
-                        //SendWhatsAppReminders();
-                    }
-                }
-            }
-        }
-
-        // Method to send WhatsApp messages as reminders for upcoming appointments
-        //protected void SendWhatsAppReminders()
-        //{
-        //    // Your Twilio account SID and Auth Token
-        //    string accountSid = "YOUR_TWILIO_ACCOUNT_SID";
-        //    string authToken = "YOUR_TWILIO_AUTH_TOKEN";
-
-        //    // Initialize Twilio client
-        //    TwilioClient.Init(accountSid, authToken);
-
-        //    // Define the message content
-        //    string message = "Hello! This is a reminder for your upcoming appointment.";
-
-        //    // Iterate through the appointments to send reminders
-        //    foreach (GridViewRow row in appointmentsGrid.Rows)
-        //    {
-        //        DateTime appointmentTime = Convert.ToDateTime(row.Cells[4].Text);
-
-        //        // If the appointment time is within the reminder period (e.g., 1 hour before)
-        //        TimeSpan reminderPeriod = TimeSpan.FromHours(1);
-        //        if (appointmentTime - DateTime.Now <= reminderPeriod)
-        //        {
-        //            // Get the user's phone number (assuming it's stored in the GridView)
-        //            string phoneNumber = "+919009330000";
-
-        //            // Send the WhatsApp message
-        //            MessageResource.Create(
-        //                from: new PhoneNumber("whatsapp:YOUR_TWILIO_WHATSAPP_NUMBER"),
-        //                to: new PhoneNumber($"whatsapp:{phoneNumber}"),
-        //                body: message
-        //            );
-        //        }
-        //    }
-        //}
-    
-        // Method to start the timer when the GridView rows are being bound (displayed)
         protected void appointmentsGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -204,6 +161,94 @@ namespace Appointment_Scheduler
             }
         }
 
-        
+        private class Class1
+        {
+            private readonly ITwilioRestClient _client;
+            //private readonly string _accountSid = ConfigurationManager.AppSettings["TwilioAccountSID"];
+            //private readonly string _authToken = ConfigurationManager.AppSettings["TwilioAuthToken"];
+
+            public Class1()
+            {
+                _client = new TwilioRestClient(_accountSid, _authToken);
+            }
+
+            public Class1(ITwilioRestClient client)
+            {
+                _client = client;
+            }
+
+
+            public void SendSmsMessage(string phoneNumber, string message)
+            {
+                var to = new PhoneNumber(phoneNumber);
+                MessageResource.Create(
+                    to,
+                    from: new PhoneNumber("+13257665272"),
+                    body: message,
+                    client: _client);
+
+            }
+        }
+
+        // Method to delete appointments with scheduled times that have already passed and send reminders one hour before
+        protected void DeleteExpiredAppointmentsAndSendReminders()
+        {
+            DateTime currentTime = DateTime.Now;
+
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                string selectQuery = "SELECT * FROM Appointments WHERE date_time >= @currentTime";
+
+                using (SqlCommand cmd = new SqlCommand(selectQuery, con))
+                {
+                    cmd.Parameters.AddWithValue("@currentTime", currentTime);
+                    SqlDataReader dr = cmd.ExecuteReader();
+
+                    //while (dr.Read())
+                    //{
+                    //    //int appointmentId = Convert.ToInt32(dr["id"]);
+
+                    //    DateTime appointmentDateTime = Convert.ToDateTime(dr["date_time"]);
+
+                    //    // Check if it's time to send the reminder
+                    //    TimeSpan timeUntilAppointment = appointmentDateTime - currentTime;
+                    //    if (timeUntilAppointment.TotalHours <= 1)
+                    //    {
+                    //        // Recipient's phone number in E.164 format (including country code)
+                    //        string recipientPhoneNumber = "+919009330000";
+
+                    //        // Your SMS message
+                    //        string message = "Hello, this is a test message from Twilio!";
+
+                    //        // Create an instance of the embedded Class1
+                    //        var smsSender = new Class1();
+
+                    //        // Send the SMS message using the SendSmsMessage method
+                    //        smsSender.SendSmsMessage(recipientPhoneNumber, message);
+                    //    }
+                    //}
+
+                    dr.Close();
+
+                    // Delete expired appointments
+                    string deleteQuery = "DELETE FROM Appointments WHERE date_time < @currentTime";
+
+                    using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, con))
+                    {
+                        deleteCmd.Parameters.AddWithValue("@currentTime", currentTime);
+                        int rowsAffected = deleteCmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // Refresh the appointments table after deleting the expired appointments
+                            LoadAppointments();
+                        }
+                    }
+                }
+            }
+        }
+
     }
+
 }

@@ -52,6 +52,7 @@
         </asp:GridView>
             </center>
         <asp:Timer ID="timerAutoDelete" runat="server" Interval="60000" Enabled="true" OnTick="timerAutoDelete_Tick"></asp:Timer>
+        <asp:Button ID="btnSendMessage" runat="server" Text="Send SMS Message" OnClick="btnSendMessage_Click" />
     </form>
 </body>
 </html>
