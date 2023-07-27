@@ -26,6 +26,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet"/>
+   
 </head>
 <body>
     <form id="form1" runat="server">
@@ -64,7 +65,6 @@
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-
     </div>
   </header><!-- End Header -->
 
@@ -77,30 +77,29 @@
          <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <center>
             <div style="margin:4%">
-        <asp:GridView ID="appointmentsGrid" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" HorizontalAlign="Center" 
+        <asp:GridView ID="appointmentsGrid" runat="server" AutoGenerateColumns="False" 
             OnRowEditing="appointmentsGrid_RowEditing" 
             OnRowDeleting="appointmentsGrid_RowDeleting" 
             OnRowUpdating="appointmentsGrid_RowUpdating" 
             OnRowCancelingEdit="appointmentsGrid_RowCancelingEdit"
             OnRowDataBound="appointmentsGrid_RowDataBound"
             DataKeyNames="id"
-            CssClass="table table-bordered table-hover"
-            AutoPostBack="True"
-            >
-            <AlternatingRowStyle BackColor="#F7F7F7" />
+            CssClass="table table-bordered table-hover table-warning table-responsive table-striped border-info"
+            AutoPostBack="True" >
+             <HeaderStyle HorizontalAlign="Center" />
             <Columns>
-                <asp:BoundField DataField="id" HeaderText="ID" />
-                <asp:BoundField DataField="full_name" HeaderText="Full Name" />
-                <asp:BoundField DataField="email" HeaderText="Email" />
-                <asp:BoundField DataField="client_name" HeaderText="Client Name" />
-                <asp:BoundField DataField="date_time" HeaderText="Appointment Date &amp; Time" DataFormatString="{0:MM/dd/yyyy HH:mm}" />
+                <asp:BoundField DataField="id" HeaderText="ID" ItemStyle-HorizontalAlign="Center"/>
+                <asp:BoundField DataField="full_name" HeaderText="Full Name" ItemStyle-HorizontalAlign="Center"/>
+                <asp:BoundField DataField="email" HeaderText="Email" ItemStyle-HorizontalAlign="Center"/>
+                <asp:BoundField DataField="client_name" HeaderText="Client Name" ItemStyle-HorizontalAlign="Center"/>
+                <asp:BoundField DataField="date_time" HeaderText="Appointment Date &amp; Time" DataFormatString="{0:MM/dd/yyyy HH:mm}" ItemStyle-HorizontalAlign="Center"/>
 
-                <asp:CommandField ButtonType="Button" HeaderText="Edit" ShowEditButton="True">
-                    <ControlStyle BackColor="#009933" BorderColor="#006600" BorderStyle="Solid" Font-Bold="True" ForeColor="White"/>
+                <asp:CommandField ButtonType="Button" HeaderText="Edit" ShowEditButton="True" ItemStyle-HorizontalAlign="Center">
+                    <ControlStyle CssClass="btn btn-success"/>
                 </asp:CommandField>
 
-                <asp:CommandField ButtonType="Button" HeaderText="Delete" ShowDeleteButton="True">
-                    <ControlStyle BackColor="Red" BorderColor="Maroon" BorderStyle="Solid" Font-Bold="True" ForeColor="White" />
+                <asp:CommandField ButtonType="Button" HeaderText="Delete" ShowDeleteButton="True" ItemStyle-HorizontalAlign="Center">
+                    <ControlStyle CssClass="btn btn-danger"/>
                 </asp:CommandField>
             </Columns>
 

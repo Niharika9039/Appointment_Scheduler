@@ -25,17 +25,15 @@ namespace Appointment_Scheduler
         {
             if (!IsPostBack)
             {
-                // Load appointments data when the page is first loaded
-                LoadAppointments();
-
                 // Enable the timer control and set its interval (in milliseconds)
                 timerAutoDelete.Enabled = true;
                 timerAutoDelete.Interval = 60000; // 1 minute (adjust as needed)
 
-                // Display the logged-in user's first name
+                // Load appointments data for the logged-in client
                 if (Session["FirstName"] != null)
                 {
                     string firstName = Session["FirstName"].ToString();
+                    LoadAppointments(firstName);
                     greetingLabel.Text = "Hi " + firstName + "!";
                 }
             }
@@ -61,7 +59,7 @@ namespace Appointment_Scheduler
         protected void appointmentsGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             appointmentsGrid.EditIndex = e.NewEditIndex;
-            LoadAppointments(); // Reload the GridView to show the editable row
+            LoadAppointments(Session["FirstName"].ToString()); // Reload the GridView to show the editable row
         }
         protected void appointmentsGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -76,7 +74,7 @@ namespace Appointment_Scheduler
                     if (t > 0)
                     {
                         appointmentsGrid.EditIndex = -1;
-                        LoadAppointments();
+                        LoadAppointments(Session["FirstName"].ToString());
                     }
                 }
             }
@@ -112,7 +110,7 @@ namespace Appointment_Scheduler
                             if (t > 0)
                             {
                                 appointmentsGrid.EditIndex = -1;
-                                LoadAppointments();
+                                LoadAppointments(Session["FirstName"].ToString());
                             }
                         }
                     }
@@ -128,22 +126,44 @@ namespace Appointment_Scheduler
         {
             // Cancel the edit mode and reset the GridView
             appointmentsGrid.EditIndex = -1;
-            LoadAppointments();
+            LoadAppointments(Session["FirstName"].ToString());
         }
-        protected void LoadAppointments()
+        //protected void LoadAppointments()
+        //{
+        //    using (SqlConnection con = new SqlConnection(ConnectionString))
+        //    {
+        //        con.Open();
+        //        SqlCommand cmd = new SqlCommand("select * from Appointments", con);
+        //        SqlDataReader dr = cmd.ExecuteReader();
+        //        if (dr.HasRows == true)
+        //        {
+        //            appointmentsGrid.DataSource = dr;
+        //            appointmentsGrid.DataBind();
+        //        }
+        //    }
+        //}
+
+        protected void LoadAppointments(string firstName)
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("select * from Appointments", con);
-                SqlDataReader dr = cmd.ExecuteReader();
-                if (dr.HasRows == true)
+                // Use parameterized query to prevent SQL injection
+                string selectQuery = "SELECT * FROM Appointments WHERE client_name LIKE @firstName";
+                using (SqlCommand cmd = new SqlCommand(selectQuery, con))
                 {
-                    appointmentsGrid.DataSource = dr;
-                    appointmentsGrid.DataBind();
+                    // Add '%' wildcard to match any client name that contains the first name (case-insensitive)
+                    cmd.Parameters.AddWithValue("@firstName", "%" + firstName + "%");
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        appointmentsGrid.DataSource = dr;
+                        appointmentsGrid.DataBind();
+                    }
                 }
             }
         }
+
 
         // Timer control for auto-deletion of expired appointments
         protected void timerAutoDelete_Tick(object sender, EventArgs e)
