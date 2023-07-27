@@ -9,11 +9,74 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title></title>
+    <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon"/>
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"/>
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet"/>
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"/>
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet"/>
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet"/>
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"/>
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet"/>
 </head>
 <body>
     <form id="form1" runat="server">
+
+        <!-- ======= Top Bar ======= -->
+  <section id="topbar" class="d-flex align-items-center">
+    <div class="container d-flex justify-content-center justify-content-md-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">info@hvantagetechnologies.com</a></i>
+        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+12134389869, +18186616301</span></i>
+      </div>
+      <div class="social-links d-none d-md-flex align-items-center">
+        <a href="https://twitter.com/i/flow/login?redirect_after_login=%2FHvantage" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="https://www.facebook.com/Hvantage.Technologies.USA" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.youtube.com/watch?v=4yRtdQX2zAA" class="instagram"><i class="bi bi-youtube"></i></a>
+        <a href="https://www.linkedin.com/company/hvantage-technologies-inc-usa-/" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+  </section>
+        <!-- ======= Header ======= -->
+  <header id="header" class="d-flex align-items-center" style="position:sticky; top:0;">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <!-- Uncomment below if you prefer to use an image logo -->
+       <img src="hvantage-technologies-usa.png" class="logo"/>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="Main.aspx#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="Main.aspx#about">About</a></li>
+          <li><a class="nav-link scrollto" href="Main.aspx#services">Services</a></li>
+          <li><a class="nav-link scrollto " href="Schedule_appoint.aspx">Meet</a></li>
+          <li><a class="nav-link scrollto" href="Signup.aspx">Sign Up</a></li>
+         <li><a class="nav-link scrollto" href="Login.aspx">Login</a></li>
+          <li><a class="nav-link scrollto" href="Main.aspx#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+        <div style="margin-top:2%; margin-left:5%">
+    <asp:Label ID="greetingLabel" runat="server" Text="" class="fs-1 fw-bold"></asp:Label><br />
+            <asp:Label ID="Label1" runat="server" style="color:#106eea;font-size:18px;font-weight:600" Text="Here's your Scheduled Meetings."></asp:Label>
+</div>
+        
+
          <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <center>
+            <div style="margin:4%">
         <asp:GridView ID="appointmentsGrid" runat="server" AutoGenerateColumns="False" BackColor="White" BorderColor="#E7E7FF" BorderStyle="None" BorderWidth="1px" CellPadding="3" GridLines="Horizontal" HorizontalAlign="Center" 
             OnRowEditing="appointmentsGrid_RowEditing" 
             OnRowDeleting="appointmentsGrid_RowDeleting" 
@@ -21,8 +84,9 @@
             OnRowCancelingEdit="appointmentsGrid_RowCancelingEdit"
             OnRowDataBound="appointmentsGrid_RowDataBound"
             DataKeyNames="id"
-            class="table table-bordered table-hover"
-            AutoPostBack="True">
+            CssClass="table table-bordered table-hover"
+            AutoPostBack="True"
+            >
             <AlternatingRowStyle BackColor="#F7F7F7" />
             <Columns>
                 <asp:BoundField DataField="id" HeaderText="ID" />
@@ -40,19 +104,12 @@
                 </asp:CommandField>
             </Columns>
 
-            <FooterStyle BackColor="#B5C7DE" ForeColor="#4A3C8C" />
-            <HeaderStyle BackColor="#4A3C8C" Font-Bold="True" ForeColor="#F7F7F7" />
-            <PagerStyle ForeColor="#4A3C8C" HorizontalAlign="Right" BackColor="#E7E7FF" />
-            <RowStyle BackColor="#E7E7FF" ForeColor="#4A3C8C" />
-            <SelectedRowStyle BackColor="#738A9C" Font-Bold="True" ForeColor="#F7F7F7" />
-            <SortedAscendingCellStyle BackColor="#F4F4FD" />
-            <SortedAscendingHeaderStyle BackColor="#5A4C9D" />
-            <SortedDescendingCellStyle BackColor="#D8D8F0" />
-            <SortedDescendingHeaderStyle BackColor="#3E3277" />
+          
         </asp:GridView>
+                </div>
             </center>
         <asp:Timer ID="timerAutoDelete" runat="server" Interval="60000" Enabled="true" OnTick="timerAutoDelete_Tick"></asp:Timer>
-        <asp:Button ID="btnSendMessage" runat="server" Text="Send SMS Message" OnClick="btnSendMessage_Click" />
-    </form>
+        <%--<asp:Button ID="btnSendMessage" runat="server" Text="Send SMS Message" OnClick="btnSendMessage_Click" />
+  --%>  </form>
 </body>
 </html>

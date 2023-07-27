@@ -29,13 +29,26 @@ namespace LoginSignup
             SqlCommand cmd = new SqlCommand(Query, con);
             int userCount = (int)cmd.ExecuteScalar();
 
+            // If the user is found in the UserDetails table, fetch the first name
+            string firstName = "";
+            if (userCount > 0)
+            {
+                string firstNameQuery = "SELECT FirstName FROM UserDetails WHERE Email='" + Email + "'";
+                SqlCommand firstNameCmd = new SqlCommand(firstNameQuery, con);
+                firstName = (string)firstNameCmd.ExecuteScalar();
+            }
+
             con.Close();
 
             if (userCount > 0)
             {
+                // Store the first name in a session variable
+                Session["FirstName"] = firstName;
+
                 string message = "Login successful!";
                 string script = "alert('" + message + "');";
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
+                Response.Redirect("Dashboard.aspx");
             }
             else
             {

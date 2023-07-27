@@ -355,6 +355,8 @@
     <Content Include="schedule.jpg" />
     <Content Include="Schedule_appoint.aspx" />
     <Content Include="Signup.aspx" />
+    <Content Include="user.png" />
+    <Content Include="user2.png" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

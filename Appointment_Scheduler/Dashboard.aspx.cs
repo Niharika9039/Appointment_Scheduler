@@ -31,6 +31,13 @@ namespace Appointment_Scheduler
                 // Enable the timer control and set its interval (in milliseconds)
                 timerAutoDelete.Enabled = true;
                 timerAutoDelete.Interval = 60000; // 1 minute (adjust as needed)
+
+                // Display the logged-in user's first name
+                if (Session["FirstName"] != null)
+                {
+                    string firstName = Session["FirstName"].ToString();
+                    greetingLabel.Text = "Hi " + firstName + "!";
+                }
             }
 
         }
@@ -229,22 +236,22 @@ namespace Appointment_Scheduler
                     //    }
                     //}
 
-                    dr.Close();
+                    //dr.Close();
 
                     // Delete expired appointments
-                    string deleteQuery = "DELETE FROM Appointments WHERE date_time < @currentTime";
+                    //string deleteQuery = "DELETE FROM Appointments WHERE date_time < @currentTime";
 
-                    using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, con))
-                    {
-                        deleteCmd.Parameters.AddWithValue("@currentTime", currentTime);
-                        int rowsAffected = deleteCmd.ExecuteNonQuery();
+                    //using (SqlCommand deleteCmd = new SqlCommand(deleteQuery, con))
+                    //{
+                    //    deleteCmd.Parameters.AddWithValue("@currentTime", currentTime);
+                    //    int rowsAffected = deleteCmd.ExecuteNonQuery();
 
-                        if (rowsAffected > 0)
-                        {
-                            // Refresh the appointments table after deleting the expired appointments
-                            LoadAppointments();
-                        }
-                    }
+                    //    if (rowsAffected > 0)
+                    //    {
+                    //        // Refresh the appointments table after deleting the expired appointments
+                    //        LoadAppointments();
+                    //    }
+                    //}
                 }
             }
         }

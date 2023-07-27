@@ -59,25 +59,9 @@
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto " href="#portfolio">Portfolio</a></li>
-          <li><a class="nav-link scrollto" href="#team">Team</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul>
-          </li>
+          <li><a class="nav-link scrollto " href="Schedule_appoint.aspx">Meet</a></li>
+          <li><a class="nav-link scrollto" href="Signup.aspx">Sign Up</a></li>
+         <li><a class="nav-link scrollto" href="Login.aspx">Login</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -93,7 +77,9 @@
       <h2>A Global Technology and Outsourcing Company</h2>
       <div class="d-flex">
         <a href="#about" class="btn-get-started scrollto">Get Started</a>
-        <a href="https://www.youtube.com/watch?v=4yRtdQX2zAA" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+        <a href="Schedule_appoint.aspx" class="btn-get-started scrollto" style="margin-left:2%">Schedule Appointment!</a>
+      <a href="https://www.youtube.com/watch?v=4yRtdQX2zAA" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+        
       </div>
     </div>
   </section><!-- End Hero -->
@@ -194,8 +180,7 @@
         <div class="section-title">
           <h2>Services</h2>
           <h3>Check our <span>Services</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-        </div>
+           </div>
 
         <div class="row">
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
@@ -259,7 +244,6 @@
         <div class="section-title">
           <h2>Team</h2>
           <h3>Our <span>Leaders</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
         </div>
          
         <div class="row">
@@ -268,12 +252,12 @@
             <div class="member">
               <div class="member-img">
                 <img src="krishnaSir.jpeg" class="img-fluid" alt=""  style="height:300px">
-                <div class="social">
+                <%--<div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
                   <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
+                </div>--%>
               </div>
               <div class="member-info">
                 <h4>Krishna Baderia</h4>
@@ -285,13 +269,13 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200" style="margin-left:5%">
             <div class="member">
               <div class="member-img">
-                <img src="neeleshSir2.jpeg" class="img-fluid" alt="">
-                <div class="social">
+                <img src="user2.png" class="img-fluid" alt="" style="width:100%;padding:10%">
+                <%--<div class="social">
                   <a href=""><i class="bi bi-twitter"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
                   <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
+                </div>--%>
               </div>
               <div class="member-info">
                 <h4>Neelesh Jain</h4>
@@ -313,15 +297,18 @@
         <div class="section-title">
           <h2>Contact</h2>
           <h3><span>Contact Us</span></h3>
-          <p>Ut possimus qui ut temporibus culpa velit eveniet modi omnis est adipisci expedita at voluptas atque vitae autem.</p>
-        </div>
+           </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
           <div class="col-lg-6">
             <div class="info-box mb-4">
               <i class="bx bx-map"></i>
               <h3>Our Address</h3>
-              <p>A108 Adam Street, New York, NY 535022</p>
+              <p><b>India:</b>
+509 block B corporate house 5th floor, RNT Marg, Indore, Madhya Pradesh 452001<br />
+<b>California:</b>
+22048 Sherman Way Suite 306
+Los Angeles, California 91303</p>
             </div>
           </div>
 
@@ -329,7 +316,8 @@
             <div class="info-box  mb-4">
               <i class="bx bx-envelope"></i>
               <h3>Email Us</h3>
-              <p>contact@example.com</p>
+              <p>info@hvantagetechnologies.com</p>
+                <br />
             </div>
           </div>
 
@@ -337,7 +325,7 @@
             <div class="info-box  mb-4">
               <i class="bx bx-phone-call"></i>
               <h3>Call Us</h3>
-              <p>+1 5589 55488 55</p>
+              <p>+12134389869, +18186616301, <br />+91-97552-99999</p>
             </div>
           </div>
 
@@ -346,32 +334,11 @@
         <div class="row" data-aos="fade-up" data-aos-delay="100">
 
           <div class="col-lg-6 ">
-            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
+            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.2960003705043!2d75.8692930748421!3d22.71723692765452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3962fd16c6da7fff%3A0xa16ada7dbc36f449!2sHvantage%20Tech%20Solutions%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1690387642505!5m2!1sen!2sin" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
           </div>
 
-          <div class="col-lg-6">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                </div>
-                <div class="col form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                </div>
-              </div>
-              <div class="form-group">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-              </div>
-              <div class="form-group">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
+            <div class="col-lg-6 ">
+            <iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2119.2970541333875!2d-118.60923156627425!3d34.20109100866869!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c29c3f43373b11%3A0xa4af29547958f30a!2s22048%20Sherman%20Way%20Suite%20306%2C%20Los%20Angeles%2C%20CA%2091303%2C%20USA!5e0!3m2!1sen!2sin!4v1690387398536!5m2!1sen!2sin" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
           </div>
 
         </div>
@@ -384,32 +351,20 @@
   <!-- ======= Footer ======= -->
   <footer id="footer">
 
-    <div class="footer-newsletter">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-6">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
     <div class="footer-top">
       <div class="container">
         <div class="row">
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>BizLand<span>.</span></h3>
-            <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+            <img src="hvantage-technologies-usa.png" class="logo"/>
+            <p style="padding-left:2%">
+              509 block B corporate house 5th floor  <br>
+              RNT Marg, Indore<br>
+              Madhya Pradesh 452001 <br><br>
+              <strong>Phone:</strong> +91-97552-99999<br>
+              <strong>Email:</strong> info@hvantagetechnologies.com<br>
             </p>
           </div>
 
@@ -427,23 +382,23 @@
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Our Services</h4>
             <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Digital Design</a></li>
               <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">E-Commerce</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Marketing</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">App Development</a></li>
             </ul>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            
+            
             <div class="social-links mt-3">
-              <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-              <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-              <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-              <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-              <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+              <a href="https://twitter.com/i/flow/login?redirect_after_login=%2FHvantage" class="twitter"><i class="bx bxl-twitter"></i></a>
+              <a href="https://www.facebook.com/Hvantage.Technologies.USA" class="facebook"><i class="bx bxl-facebook"></i></a>
+              <a href="https://www.youtube.com/watch?v=4yRtdQX2zAA" class="instagram"><i class="bx bxl-youtube"></i></a>
+              <a href="https://www.linkedin.com/company/hvantage-technologies-inc-usa-/" class="linkedin"><i class="bx bxl-linkedin"></i></a>
             </div>
           </div>
 
@@ -453,14 +408,14 @@
 
     <div class="container py-4">
       <div class="copyright">
-        &copy; Copyright <strong><span>BizLand</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Hvantage Technologies</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/bizland-bootstrap-business-template/ -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        Designed by <a href="https://bootstrapmade.com/">Niharika Sharma</a>
       </div>
     </div>
   </footer><!-- End Footer -->
