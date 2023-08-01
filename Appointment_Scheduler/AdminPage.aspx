@@ -1,15 +1,15 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="Appointment_Scheduler.Dashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AdminPage.aspx.cs" Inherits="Appointment_Scheduler.AdminPage" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title></title>
-    <!-- Favicons -->
+     <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon"/>
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"/>
 
@@ -26,12 +26,11 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet"/>
-   
+    
 </head>
 <body>
     <form id="form1" runat="server">
-
-        <!-- ======= Top Bar ======= -->
+       <!-- ======= Top Bar ======= -->
   <section id="topbar" class="d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
@@ -69,14 +68,22 @@
   </header><!-- End Header -->
 
         <div style="margin-top:2%; margin-left:5%">
-    <asp:Label ID="greetingLabel" runat="server" Text="" class="fs-1 fw-bold"></asp:Label><br />
-            <asp:Label ID="Label1" runat="server" style="color:#106eea;font-size:18px;font-weight:600" Text="Here's your Scheduled Meetings."></asp:Label>
+    <asp:Label ID="greetingLabel" runat="server" Text="Admin Page!" class="fs-1 fw-bold"></asp:Label><br />
+            <asp:Label ID="Label1" runat="server" style="color:#106eea;font-size:16px;font-weight:600" Text="Click on the image to view records."></asp:Label>
 </div>
-        
+   <!-- ======= Admin Page ======= -->
+<section id="admin-page" class="d-flex align-items-center justify-content-center" style="margin-top:-13%">
+  <div class="container text-center">
+    <!-- Show the image by default -->
+    <div id="image-container">
+      <img src="admin.jpg" alt="Your Image" class="small-image" onclick="toggleGridView()" style="width:60%"/>
+    </div>
 
-         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+<!-- ======= GridView ======= -->
+
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <center>
-            <div style="margin:4%">
+            <div style="margin-left:4%;margin-right:4%;margin-top:15%;display: none;" id="gridViewContainer" visible="false">
         <asp:GridView ID="appointmentsGrid" runat="server" AutoGenerateColumns="False" 
             OnRowEditing="appointmentsGrid_RowEditing" 
             OnRowDeleting="appointmentsGrid_RowDeleting" 
@@ -107,8 +114,27 @@
         </asp:GridView>
                 </div>
             </center>
+            </div>
+</section>
+            
         <asp:Timer ID="timerAutoDelete" runat="server" Interval="60000" Enabled="true" OnTick="timerAutoDelete_Tick"></asp:Timer>
-        <%--<asp:Button ID="btnSendMessage" runat="server" Text="Send SMS Message" OnClick="btnSendMessage_Click" />
-  --%>  </form>
+       <script>
+           function toggleGridView() {
+               // Get references to the image container and GridView container
+               var imageContainer = document.getElementById("image-container");
+               var gridViewContainer = document.getElementById("gridViewContainer");
+
+               // Toggle the visibility of the containers
+               if (gridViewContainer.style.display === "block") {
+                   gridViewContainer.style.display = "none";
+                   imageContainer.style.display = "block";
+               } else {
+                   gridViewContainer.style.display = "block";
+                   imageContainer.style.display = "none";
+               }
+           }
+       </script>
+
+    </form>
 </body>
 </html>

@@ -25,6 +25,14 @@ namespace LoginSignup
             string Email = email.Text;
             string Password = pass.Text;
 
+            if (Email == "admin@gmail.com" && Password == "admin@123")
+            {
+                // Admin login detected, redirect to admin page
+                con.Close();
+                Response.Redirect("AdminPage.aspx");
+                return;
+            }
+
             string Query = "SELECT COUNT(*) FROM UserDetails WHERE Email='" + Email + "' AND Password='" + Password + "'";
             SqlCommand cmd = new SqlCommand(Query, con);
             int userCount = (int)cmd.ExecuteScalar();
@@ -57,5 +65,6 @@ namespace LoginSignup
                 ClientScript.RegisterStartupScript(this.GetType(), "alert", script, true);
             }
         }
+
     }
 }

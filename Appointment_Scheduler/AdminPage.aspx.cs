@@ -1,22 +1,14 @@
 ﻿using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using System.Web.Configuration;
-using Twilio;
-using Twilio.Rest.Api.V2010.Account;
-using Twilio.TwiML.Messaging;
-using Twilio.Clients;
-using Twilio.Types;
-using System.Web.Services.Description;
 
 namespace Appointment_Scheduler
 {
-    public partial class Dashboard : System.Web.UI.Page
+    public partial class AdminPage : System.Web.UI.Page
     {
         private const string EDIT_MODE_KEY = "EditMode";
         private string ConnectionString = "Data Source=Niharika_Sharma\\SQLEXPRESS;Initial Catalog=AppointmentSchedule;Integrated Security=True";
@@ -29,37 +21,16 @@ namespace Appointment_Scheduler
                 timerAutoDelete.Enabled = true;
                 timerAutoDelete.Interval = 60000; // 1 minute (adjust as needed)
 
-                // Load appointments data for the logged-in client
-                if (Session["FirstName"] != null)
-                {
-                    string firstName = Session["FirstName"].ToString();
-                    LoadAppointments(firstName);
-                    greetingLabel.Text = "Hi " + firstName + "!";
-                }
+                appointmentsGrid.Visible = false;
+                // Load appointments data for the logged-in client           
+                LoadAppointments();                            
             }
-
         }
-
-        //protected void btnSendMessage_Click(object sender, EventArgs e)
-        //{
-        //    // Recipient's phone number in E.164 format (including country code)
-        //    string recipientPhoneNumber = "+919009330000";
-
-        //    // Your SMS message
-        //    string message = "Hello, this is a test message from Twilio!";
-
-        //    // Create an instance of the embedded Class1
-        //    var smsSender = new Class1();
-
-        //    // Send the SMS message using the SendSmsMessage method
-        //    smsSender.SendSmsMessage(recipientPhoneNumber, message);
-        //}
-
 
         protected void appointmentsGrid_RowEditing(object sender, GridViewEditEventArgs e)
         {
             appointmentsGrid.EditIndex = e.NewEditIndex;
-            LoadAppointments(Session["FirstName"].ToString()); // Reload the GridView to show the editable row
+            LoadAppointments(); // Reload the GridView to show the editable row
         }
         protected void appointmentsGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -74,7 +45,7 @@ namespace Appointment_Scheduler
                     if (t > 0)
                     {
                         appointmentsGrid.EditIndex = -1;
-                        LoadAppointments(Session["FirstName"].ToString());
+                        LoadAppointments();
                     }
                 }
             }
@@ -110,7 +81,7 @@ namespace Appointment_Scheduler
                             if (t > 0)
                             {
                                 appointmentsGrid.EditIndex = -1;
-                                LoadAppointments(Session["FirstName"].ToString());
+                                LoadAppointments();
                             }
                         }
                     }
@@ -126,32 +97,35 @@ namespace Appointment_Scheduler
         {
             // Cancel the edit mode and reset the GridView
             appointmentsGrid.EditIndex = -1;
-            LoadAppointments(Session["FirstName"].ToString());
+            LoadAppointments();
         }
-       
-        protected void LoadAppointments(string firstName)
+
+        protected void LoadAppointments()
         {
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
                 // Use parameterized query to prevent SQL injection
-                string selectQuery = "SELECT * FROM Appointments WHERE client_name LIKE @firstName";
+                string selectQuery = "SELECT * FROM Appointments";
                 using (SqlCommand cmd = new SqlCommand(selectQuery, con))
                 {
-                    // Add '%' wildcard to match any client name that contains the first name (case-insensitive)
-                    cmd.Parameters.AddWithValue("@firstName", "%" + firstName + "%");
+                    
                     SqlDataReader dr = cmd.ExecuteReader();
                     if (dr.HasRows)
                     {
                         appointmentsGrid.DataSource = dr;
                         appointmentsGrid.DataBind();
+                        appointmentsGrid.Visible = true;
+                    }
+                    else
+                    {
+                        // If there are no rows, hide the GridView
+                        appointmentsGrid.Visible = false;
                     }
                 }
             }
         }
 
-
-        // Timer control for auto-deletion of expired appointments
         protected void timerAutoDelete_Tick(object sender, EventArgs e)
         {
 
@@ -159,7 +133,7 @@ namespace Appointment_Scheduler
             Response.Write("Timer ticked! Current time: " + DateTime.Now.ToString() + "<br>");
 
             // Call the method to delete expired appointments
-            DeleteExpiredAppointmentsAndSendReminders();
+            DeleteExpiredAppointments();
         }
 
         protected void appointmentsGrid_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -174,76 +148,14 @@ namespace Appointment_Scheduler
             }
         }
 
-        private class Class1
-        {
-            private readonly ITwilioRestClient _client;
-            private readonly string _accountSid = ConfigurationManager.AppSettings["TwilioAccountSID"];
-            private readonly string _authToken = ConfigurationManager.AppSettings["TwilioAuthToken"];
-
-            public Class1()
-            {
-                _client = new TwilioRestClient(_accountSid, _authToken);
-            }
-
-            public Class1(ITwilioRestClient client)
-            {
-                _client = client;
-            }
-
-
-            public void SendSmsMessage(string phoneNumber, string message)
-            {
-                var to = new PhoneNumber(phoneNumber);
-                MessageResource.Create(
-                    to,
-                    from: new PhoneNumber("+13257665272"),
-                    body: message,
-                    client: _client);
-
-            }
-        }
-
-        // Method to delete appointments with scheduled times that have already passed and send reminders one hour before
-        protected void DeleteExpiredAppointmentsAndSendReminders()
+        protected void DeleteExpiredAppointments()
         {
             DateTime currentTime = DateTime.Now;
 
             using (SqlConnection con = new SqlConnection(ConnectionString))
             {
                 con.Open();
-                string selectQuery = "SELECT * FROM Appointments WHERE date_time >= @currentTime";
-
-                using (SqlCommand cmd = new SqlCommand(selectQuery, con))
-                {
-                    cmd.Parameters.AddWithValue("@currentTime", currentTime);
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    while (dr.Read())
-                    {
-                        //int appointmentId = Convert.ToInt32(dr["id"]);
-
-                        DateTime appointmentDateTime = Convert.ToDateTime(dr["date_time"]);
-
-                        // Check if it's time to send the reminder
-                        TimeSpan timeUntilAppointment = appointmentDateTime - currentTime;
-                        if (timeUntilAppointment.TotalHours <= 1)
-                        {
-                            // Recipient's phone number in E.164 format (including country code)
-                            string recipientPhoneNumber = "+919009330000";
-
-                            // Your SMS message
-                            string message = $"Hello, this is a reminder for your appointment on {appointmentDateTime.ToString("dd/MM/yyyy")} at {appointmentDateTime.ToString("HH:mm")}. Don't forget to attend!"; ;
-
-                            // Create an instance of the embedded Class1
-                            var smsSender = new Class1();
-
-                            // Send the SMS message using the SendSmsMessage method
-                            smsSender.SendSmsMessage(recipientPhoneNumber, message);
-                        }
-                    }
-
-                    dr.Close();
-
+               
                     //Delete expired appointments
                     string deleteQuery = "DELETE FROM Appointments WHERE date_time < @currentTime";
 
@@ -255,7 +167,7 @@ namespace Appointment_Scheduler
                         if (rowsAffected > 0)
                         {
                             // Refresh the appointments table after deleting the expired appointments
-                            LoadAppointments(Session["FirstName"].ToString());
+                            LoadAppointments();
                         }
                     }
                 }
@@ -263,5 +175,3 @@ namespace Appointment_Scheduler
         }
 
     }
-
-}
