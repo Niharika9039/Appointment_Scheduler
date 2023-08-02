@@ -23,7 +23,8 @@ namespace Appointment_Scheduler
 
                 appointmentsGrid.Visible = false;
                 // Load appointments data for the logged-in client           
-                LoadAppointments();                            
+                LoadAppointments();
+                LoadUserDetails();
             }
         }
 
@@ -125,7 +126,96 @@ namespace Appointment_Scheduler
                 }
             }
         }
+        protected void LoadUserDetails()
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                // Use parameterized query to prevent SQL injection
+                string selectQuery = "SELECT ID, FirstName, LastName, Email, PhoneNumber, Password FROM UserDetails";
+                using (SqlCommand cmd = new SqlCommand(selectQuery, con))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    if (dr.HasRows)
+                    {
+                        userDetailsGrid.DataSource = dr;
+                        userDetailsGrid.DataBind();
+                        userDetailsGrid.Visible = true;
+                    }
+                    else
+                    {
+                        // If there are no rows, hide the GridView
+                        userDetailsGrid.Visible = false;
+                    }
+                }
+            }
+        }
+        protected void userDetailsGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            userDetailsGrid.EditIndex = -1;
+            LoadUserDetails();
+        }
 
+        protected void userDetailsGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < userDetailsGrid.Rows.Count)
+            {
+                int userId = Convert.ToInt32(userDetailsGrid.DataKeys[e.RowIndex].Value.ToString());
+                string firstName = ((TextBox)userDetailsGrid.Rows[e.RowIndex].Cells[1].Controls[0]).Text;
+                string lastName = ((TextBox)userDetailsGrid.Rows[e.RowIndex].Cells[2].Controls[0]).Text;
+                string email = ((TextBox)userDetailsGrid.Rows[e.RowIndex].Cells[3].Controls[0]).Text;
+                string phoneNumber = ((TextBox)userDetailsGrid.Rows[e.RowIndex].Cells[4].Controls[0]).Text;
+                string password = ((TextBox)userDetailsGrid.Rows[e.RowIndex].Cells[5].Controls[0]).Text;
+
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    con.Open();
+                    string updateQuery = "UPDATE UserDetails SET FirstName = @firstName, LastName = @lastName, " +
+                        "Email = @email, PhoneNumber = @phoneNumber, Password = @password WHERE ID = @userId";
+
+                    using (SqlCommand cmd = new SqlCommand(updateQuery, con))
+                    {
+                        cmd.Parameters.AddWithValue("@firstName", firstName);
+                        cmd.Parameters.AddWithValue("@lastName", lastName);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@phoneNumber", phoneNumber);
+                        cmd.Parameters.AddWithValue("@password", password);
+                        cmd.Parameters.AddWithValue("@userId", userId);
+
+                        int t = cmd.ExecuteNonQuery();
+                        if (t > 0)
+                        {
+                            userDetailsGrid.EditIndex = -1;
+                            LoadUserDetails();
+                        }
+                    }
+                }
+            }
+        }
+        protected void userDetailsGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.RowIndex < userDetailsGrid.Rows.Count)
+            {
+                int userId = Convert.ToInt32(userDetailsGrid.DataKeys[e.RowIndex].Value.ToString());
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand("DELETE FROM UserDetails WHERE ID = @userId", con);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    int t = cmd.ExecuteNonQuery();
+                    if (t > 0)
+                    {
+                        userDetailsGrid.EditIndex = -1;
+                        LoadUserDetails();
+                    }
+                }
+            }
+        }
+        protected void userDetailsGrid_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            userDetailsGrid.EditIndex = e.NewEditIndex;
+            LoadUserDetails(); // Reload the GridView to show the editable row
+        }
         protected void timerAutoDelete_Tick(object sender, EventArgs e)
         {
 

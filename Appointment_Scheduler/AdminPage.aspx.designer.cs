@@ -60,6 +60,15 @@ namespace Appointment_Scheduler
         protected global::System.Web.UI.WebControls.GridView appointmentsGrid;
 
         /// <summary>
+        /// userDetailsGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView userDetailsGrid;
+
+        /// <summary>
         /// timerAutoDelete control.
         /// </summary>
         /// <remarks>

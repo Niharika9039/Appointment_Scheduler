@@ -39,11 +39,13 @@ namespace LoginSignup
 
             // If the user is found in the UserDetails table, fetch the first name
             string firstName = "";
+            string phoneNum = "";
             if (userCount > 0)
             {
-                string firstNameQuery = "SELECT FirstName FROM UserDetails WHERE Email='" + Email + "'";
+                string firstNameQuery = "SELECT FirstName, PhoneNumber FROM UserDetails WHERE Email='" + Email + "'";
                 SqlCommand firstNameCmd = new SqlCommand(firstNameQuery, con);
                 firstName = (string)firstNameCmd.ExecuteScalar();
+                phoneNum = (string)firstNameCmd.ExecuteScalar();
             }
 
             con.Close();
@@ -52,6 +54,7 @@ namespace LoginSignup
             {
                 // Store the first name in a session variable
                 Session["FirstName"] = firstName;
+                Session["PhoneNumber"] = phoneNum;
 
                 string message = "Login successful!";
                 string script = "alert('" + message + "');";

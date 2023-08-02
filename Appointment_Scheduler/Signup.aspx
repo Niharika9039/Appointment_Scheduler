@@ -93,6 +93,12 @@
                             <asp:TextBox required= "true" ID="email" CssClass="form-control border-0 shadow form-control-lg text-base" placeholder="Email" runat="server" ></asp:TextBox>
 
                         </div>
+
+                        <div class ="form-group mb-4">
+                            <asp:TextBox required= "true" ID="phone" CssClass="form-control border-0 shadow form-control-lg text-base" placeholder="Phone Number" runat="server" ></asp:TextBox>
+
+                        </div>
+
                              <div class ="form-group mb-4">
                             <asp:TextBox required= "true" TextMode="Password" ID="pass" CssClass="form-control border-0 shadow form-control-lg text-base" placeholder="Password" runat="server" ></asp:TextBox>
 

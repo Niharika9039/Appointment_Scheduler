@@ -83,18 +83,21 @@
 
         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
         <center>
-            <div style="margin-left:4%;margin-right:4%;margin-top:15%;display: none;" id="gridViewContainer" visible="false">
-        <asp:GridView ID="appointmentsGrid" runat="server" AutoGenerateColumns="False" 
-            OnRowEditing="appointmentsGrid_RowEditing" 
-            OnRowDeleting="appointmentsGrid_RowDeleting" 
-            OnRowUpdating="appointmentsGrid_RowUpdating" 
-            OnRowCancelingEdit="appointmentsGrid_RowCancelingEdit"
-            OnRowDataBound="appointmentsGrid_RowDataBound"
-            DataKeyNames="id"
-            CssClass="table table-bordered table-hover table-warning table-responsive table-striped border-info"
-            AutoPostBack="True" >
-             <HeaderStyle HorizontalAlign="Center" />
-            <Columns>
+            <div style="margin-top:15%;display: none;" id="gridViewContainer" visible="false">
+        <h2 style="margin-bottom:2%;color:midnightblue;font-family:'Arial Rounded MT'; font-weight:bold">Appointments Table</h2>
+                <asp:GridView ID="appointmentsGrid" runat="server" AutoGenerateColumns="False" 
+    OnRowEditing="appointmentsGrid_RowEditing" 
+    OnRowDeleting="appointmentsGrid_RowDeleting" 
+    OnRowUpdating="appointmentsGrid_RowUpdating" 
+    OnRowCancelingEdit="appointmentsGrid_RowCancelingEdit"
+    OnRowDataBound="appointmentsGrid_RowDataBound"
+    DataKeyNames="id"
+    CssClass="table table-bordered table-hover table-responsive border-info"
+    AutoPostBack="True">
+    <HeaderStyle HorizontalAlign="Center" />
+    <RowStyle CssClass="table-info" HorizontalAlign="Center" />
+    <AlternatingRowStyle CssClass="table-light" HorizontalAlign="Center" />
+    <Columns>
                 <asp:BoundField DataField="id" HeaderText="ID" ItemStyle-HorizontalAlign="Center"/>
                 <asp:BoundField DataField="full_name" HeaderText="Full Name" ItemStyle-HorizontalAlign="Center"/>
                 <asp:BoundField DataField="email" HeaderText="Email" ItemStyle-HorizontalAlign="Center"/>
@@ -109,9 +112,38 @@
                     <ControlStyle CssClass="btn btn-danger"/>
                 </asp:CommandField>
             </Columns>
-
-          
         </asp:GridView>
+
+                <h2 style="margin-top:5%;margin-bottom:2%;color:midnightblue;font-family:'Arial Rounded MT'; font-weight:bold">User Details Table</h2>
+<asp:GridView ID="userDetailsGrid" runat="server" AutoGenerateColumns="False"
+    DataKeyNames="ID"
+    OnRowEditing="userDetailsGrid_RowEditing" 
+    OnRowDeleting="userDetailsGrid_RowDeleting" 
+    OnRowUpdating="userDetailsGrid_RowUpdating" 
+    OnRowCancelingEdit="userDetailsGrid_RowCancelingEdit"
+    CssClass="table table-bordered table-hover table-responsive border-info"
+    AutoPostBack="True">
+    <HeaderStyle HorizontalAlign="Center" />
+    <RowStyle CssClass="table-info" HorizontalAlign="Center" />
+    <AlternatingRowStyle CssClass="table-light" HorizontalAlign="Center" />
+    <Columns>
+        <asp:BoundField DataField="ID" HeaderText="ID" ItemStyle-HorizontalAlign="Center" />
+        <asp:BoundField DataField="FirstName" HeaderText="First Name" ItemStyle-HorizontalAlign="Center" />
+        <asp:BoundField DataField="LastName" HeaderText="Last Name" ItemStyle-HorizontalAlign="Center" />
+        <asp:BoundField DataField="Email" HeaderText="Email" ItemStyle-HorizontalAlign="Center" />
+        <asp:BoundField DataField="PhoneNumber" HeaderText="Phone Number" ItemStyle-HorizontalAlign="Center" />
+        <asp:BoundField DataField="Password" HeaderText="Password" ItemStyle-HorizontalAlign="Center" />
+
+        <asp:CommandField ButtonType="Button" HeaderText="Edit" ShowEditButton="True" ItemStyle-HorizontalAlign="Center">
+                    <ControlStyle CssClass="btn btn-success"/>
+                </asp:CommandField>
+
+                <asp:CommandField ButtonType="Button" HeaderText="Delete" ShowDeleteButton="True" ItemStyle-HorizontalAlign="Center">
+                    <ControlStyle CssClass="btn btn-danger"/>
+                </asp:CommandField>
+
+    </Columns>
+</asp:GridView>
                 </div>
             </center>
             </div>

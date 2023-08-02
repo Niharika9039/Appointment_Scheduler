@@ -33,6 +33,7 @@ namespace Appointment_Scheduler
                 if (Session["FirstName"] != null)
                 {
                     string firstName = Session["FirstName"].ToString();
+                    string phoneNum = Session["PhoneNumber"].ToString();
                     LoadAppointments(firstName);
                     greetingLabel.Text = "Hi " + firstName + "!";
                 }
@@ -229,7 +230,7 @@ namespace Appointment_Scheduler
                         if (timeUntilAppointment.TotalHours <= 1)
                         {
                             // Recipient's phone number in E.164 format (including country code)
-                            string recipientPhoneNumber = "+919009330000";
+                            string recipientPhoneNumber = Session["PhoneNumber"] as string;
 
                             // Your SMS message
                             string message = $"Hello, this is a reminder for your appointment on {appointmentDateTime.ToString("dd/MM/yyyy")} at {appointmentDateTime.ToString("HH:mm")}. Don't forget to attend!"; ;

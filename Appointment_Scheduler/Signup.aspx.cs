@@ -26,6 +26,7 @@ namespace LoginSignup
             string FirstName = firstname.Text;
             string LastName = lastname.Text;
             string Email = email.Text;
+            string phoneNum = phone.Text;
             string Password = pass.Text;
             string Confirm = conf.Text;
 
@@ -37,7 +38,7 @@ namespace LoginSignup
                 return; // Do not proceed with saving data if the passwords don't match
             }
 
-            string Query = "insert into UserDetails (FirstName, LastName, Email, Password) values ('"+FirstName+"', '"+LastName+"','"+Email+"', '"+Password+"')";
+            string Query = "insert into UserDetails (FirstName, LastName, Email, Password, PhoneNumber) values ('" + FirstName+"', '"+LastName+"','"+Email+ "', '" + Password+ "','"+phoneNum+"')";
 
             SqlCommand cmd = new SqlCommand(Query, con);
             cmd.ExecuteNonQuery();

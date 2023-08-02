@@ -84,10 +84,12 @@
             OnRowCancelingEdit="appointmentsGrid_RowCancelingEdit"
             OnRowDataBound="appointmentsGrid_RowDataBound"
             DataKeyNames="id"
-            CssClass="table table-bordered table-hover table-warning table-responsive table-striped border-info"
+            CssClass="table table-bordered table-hover table-responsive border-info"
             AutoPostBack="True" >
              <HeaderStyle HorizontalAlign="Center" />
-            <Columns>
+    <RowStyle CssClass="table-info" HorizontalAlign="Center" />
+    <AlternatingRowStyle CssClass="table-light" HorizontalAlign="Center" />
+    <Columns>
                 <asp:BoundField DataField="id" HeaderText="ID" ItemStyle-HorizontalAlign="Center"/>
                 <asp:BoundField DataField="full_name" HeaderText="Full Name" ItemStyle-HorizontalAlign="Center"/>
                 <asp:BoundField DataField="email" HeaderText="Email" ItemStyle-HorizontalAlign="Center"/>
